@@ -27,6 +27,6 @@ public class EmptyPhone {
                 .get("simcards/getEmptyPhone")
                 .then().log().all()
                 .extract().body().jsonPath().getList("phones", Phone.class);
-        int i = 0;
+        int i = 1;
     }
 }
