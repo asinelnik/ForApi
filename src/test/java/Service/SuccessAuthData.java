@@ -1,7 +1,9 @@
-public class SucsesAuth {
+package Service;
+
+public class SuccessAuthData {
     private String token;
 
-    public SucsesAuth(String token) {
+    public SuccessAuthData(String token) {
         this.token = token;
     }
 

@@ -4,23 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e03857d6-b800-481e-89bb-91d3fa693fc9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ServiceYota/testService-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/EmptyPhone.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/LoginInTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/Service/Specifications.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/SucsesAuth.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/UserData.java" afterDir="false" />
+    <list default="true" id="e03857d6-b800-481e-89bb-91d3fa693fc9" name="Changes" comment="Test">
+      <change afterPath="$PROJECT_DIR$/src/test/java/PhoneEmptyData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/Service/BaseTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/EmptyPhone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EmptyPhone.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/LoginInTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/SucsesAuth.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/Service/SuccessAuthData.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,12 +42,17 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_directory_selection": "C:/Users/asinelnik/IdeaProjects/Yota/src/test/java",
-    "last_opened_file_path": "C:/Users/asinelnik/AquaProjects/Testik"
+    "last_opened_file_path": "C:/Users/asinelnik/IdeaProjects/Yota",
+    "settings.editor.selected.configurable": "project.propVCSSupport.CommitDialog"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\asinelnik\IdeaProjects\Yota\ServiceYota" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="Service" />
+      <recent name="" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -67,12 +62,54 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="TestNG.LoginInTest.getTokenTest">
-    <configuration name="LoginInTest" type="TestNG" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="TestNG.EmptyPhone.getEmptyPhone">
+    <configuration name="BaseTest.getTokenTest" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="Yota" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value=".*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="Service" />
+      <option name="MAIN_CLASS_NAME" value="Service.BaseTest" />
+      <option name="METHOD_NAME" value="getTokenTest" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EmptyPhone" type="TestNG" temporary="true" nameIsGenerated="true">
       <module name="Yota" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="LoginInTest" />
+      <option name="MAIN_CLASS_NAME" value="EmptyPhone" />
       <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EmptyPhone.getEmptyPhone" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="Yota" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="EmptyPhone" />
+      <option name="METHOD_NAME" value="getEmptyPhone" />
+      <option name="TEST_OBJECT" value="METHOD" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EmptyPhone.getTokenTest" type="TestNG" temporary="true" nameIsGenerated="true">
+      <module name="Yota" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="EmptyPhone" />
+      <option name="METHOD_NAME" value="getTokenTest" />
+      <option name="TEST_OBJECT" value="METHOD" />
       <properties />
       <listeners />
       <method v="2">
@@ -93,12 +130,18 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="TestNG.EmptyPhone.getEmptyPhone" />
+        <item itemvalue="TestNG.EmptyPhone" />
+        <item itemvalue="TestNG.EmptyPhone.getTokenTest" />
+        <item itemvalue="TestNG.BaseTest.getTokenTest" />
         <item itemvalue="TestNG.LoginInTest.getTokenTest" />
-        <item itemvalue="TestNG.LoginInTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\asinelnik\AppData\Roaming\Subversion</configuration>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="e03857d6-b800-481e-89bb-91d3fa693fc9" name="Changes" comment="" />
@@ -107,6 +150,14 @@
       <option name="presentableId" value="Default" />
       <updated>1691132421256</updated>
     </task>
+    <task id="LOCAL-00001" summary="Test">
+      <created>1692622033099</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1692622033099</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -115,6 +166,17 @@
         <entry key="MAIN">
           <value>
             <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
               <option name="TEXT_FILTER_SETTINGS">
                 <TextFilterSettings>
                   <option name="REGEX" value="true" />
@@ -126,5 +188,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Test" />
+    <option name="LAST_COMMIT_MESSAGE" value="Test" />
   </component>
 </project>
