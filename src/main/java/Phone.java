@@ -1,8 +1,8 @@
-public class PhoneEmptyData {
-    public Object phone;
-    public String locale;
+public class Phone {
+    private Object phone;
+    private String locale;
 
-    public PhoneEmptyData(Object phone, String locale) {
+    public Phone(Object phone, String locale) {
         this.phone = phone;
         this.locale = locale;
     }

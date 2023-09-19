@@ -7,11 +7,8 @@
     <list default="true" id="e03857d6-b800-481e-89bb-91d3fa693fc9" name="Changes" comment="Test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/PhoneEmptyData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Phone.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/EmptyPhone.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/EmptyPhone.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/PhoneEmptyData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/PhoneEmptyData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Service/BaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/BaseTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Service/Specifications.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Service/Specifications.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/Service/SuccessAuthData.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,10 +136,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="TestNG.EmptyPhone.getEmptyPhone" />
-        <item itemvalue="TestNG.BaseTest.getTokenTest" />
-        <item itemvalue="TestNG.LoginInTest.getTokenTest" />
-        <item itemvalue="TestNG.EmptyPhone.getTokenTest" />
         <item itemvalue="TestNG.EmptyPhone" />
+        <item itemvalue="TestNG.LoginInTest.getTokenTest" />
+        <item itemvalue="TestNG.BaseTest.getTokenTest" />
+        <item itemvalue="TestNG.EmptyPhone.getTokenTest" />
       </list>
     </recent_temporary>
   </component>
@@ -172,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1695105007914</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Test">
+      <created>1695119321914</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1695119321914</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -213,8 +217,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/EmptyPhone.java</url>
-          <line>24</line>
-          <option name="timeStamp" value="2" />
+          <line>29</line>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
