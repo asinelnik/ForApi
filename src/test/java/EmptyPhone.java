@@ -1,11 +1,8 @@
 import Service.BaseTest;
-import Service.Specifications;
 import io.restassured.http.ContentType;
-import org.testng.Assert;
+import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
@@ -16,7 +13,7 @@ public class EmptyPhone {
 
     @Test
     public void getEmptyPhone() {
-        Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOk200());
+        baseTest.forSpecification();
         List<Phone> phones = given()
                 .when()
                 .contentType(ContentType.JSON)
@@ -26,7 +23,7 @@ public class EmptyPhone {
                 .header("Accept", "*/*")
                 .get("simcards/getEmptyPhone")
                 .then().log().all()
-                .extract().body().jsonPath().getList("phones", Phone.class);
-        int i = 1;
+                .extract().response().jsonPath().getList("phones", Phone.class);
+        Assertions.assertThat(phones).as("Свободный номер не найден").extracting(Phone::getPhone).isNotNull();
     }
 }
