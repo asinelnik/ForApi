@@ -3,17 +3,14 @@ package steps;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import models.Phone;
-import org.testng.annotations.Test;
 import services.BaseTest;
-import services.ConfigProvider;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GetAllPhoneNumber {
+public class GetEmptyPhone {
     BaseTest baseTest = new BaseTest();
-    public Long getEmptyPhoneNumber() {
-        baseTest.forSpecification();
+    public List<Long> getEmptyPhoneNumberUser() {
         List<Phone> phones = RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)
@@ -25,7 +22,6 @@ public class GetAllPhoneNumber {
                 .then().log().all()
                 .extract().response().jsonPath().getList("phones", Phone.class);
         List<Long> phoneNumber = phones.stream().map(Phone::getPhone).collect(Collectors.toList());
-        Long testPhone = phoneNumber.get(0);
-    return testPhone;
+        return phoneNumber;
     }
 }
