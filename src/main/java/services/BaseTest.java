@@ -49,19 +49,4 @@ public class BaseTest {
         String token = response.jsonPath().getString("token");
         return token;
     }
-
-    public void getPhoneNumberUser() {
-        forSpecification();
-        List<Phone> phones = RestAssured.given()
-                .when()
-                .contentType(ContentType.JSON)
-                .header("authToken", getTokenUser())
-                .header("Connection", "keep-alive")
-                .header("Accept-Encoding", "gzip, deflate, br")
-                .header("Accept", "*/*")
-                .get("/simcards/getEmptyPhone")
-                .then().log().all()
-                .extract().response().jsonPath().getList("phones", Phone.class);
-        List<Long> phoneNumber = phones.stream().map(Phone::getPhone).collect(Collectors.toList());
-    }
 }

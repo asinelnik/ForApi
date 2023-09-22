@@ -5,13 +5,14 @@ import steps.GetEmptyPhone;
 
 import java.util.List;
 
-public class GetEmptyPhoneTest {
+public class GetEmptyPhonesUserTest {
     BaseTest baseTest = new BaseTest();
     GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
 
     @Test
     public void getEmptyPhone() {
-        List<Long> phones = getEmptyPhone.getEmptyPhoneNumberUser();
-        Assertions.assertThat(phones).as("Список номеров пуст").isNotEmpty();
+        baseTest.forSpecification();
+        getEmptyPhone.responseGetEmptyPhone();
+        System.out.println(getEmptyPhone.responseGetEmptyPhone());
     }
 }

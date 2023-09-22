@@ -16,12 +16,4 @@ public class Phone {
         this.phone = phone;
         this.locale = locale;
     }
-
-    public Long getPhone() {
-        return phone;
-    }
-
-    public String getLocale() {
-        return locale;
-    }
 }

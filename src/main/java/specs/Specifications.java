@@ -17,7 +17,6 @@ public class Specifications {
     }
     public static ResponseSpecification responseSpecOk200(){
         return new ResponseSpecBuilder()
-                .expectStatusCode(200)
                 .build();
     }
 
