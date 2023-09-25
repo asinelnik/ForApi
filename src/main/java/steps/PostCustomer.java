@@ -24,7 +24,7 @@ public class PostCustomer {
     public void createCustomer() {
         baseTest.forSpecification();
         customer.setName("Alex");
-        customer.setPhone(getEmptyPhone.getEmptyPhoneNumberUser().get(0));
+        customer.setPhone(getEmptyPhone.responseGetEmptyPhone().get(0));
         additionalParameters.setString("param");
         Response response = RestAssured.given()
                 .when()

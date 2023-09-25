@@ -13,6 +13,5 @@ public class GetEmptyPhonesUserTest {
     public void getEmptyPhone() {
         baseTest.forSpecification();
         getEmptyPhone.responseGetEmptyPhone();
-        System.out.println(getEmptyPhone.responseGetEmptyPhone());
     }
 }

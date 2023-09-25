@@ -7,6 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+
 public class Phone {
     private Long phone;
     private String locale;

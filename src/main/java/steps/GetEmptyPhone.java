@@ -3,18 +3,11 @@ package steps;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import models.Phone;
-import org.assertj.core.api.Assertions;
 import services.BaseTest;
-import services.ConfigProvider;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
-import static org.awaitility.Awaitility.await;
-import static org.awaitility.Awaitility.given;
 
 public class GetEmptyPhone {
     BaseTest baseTest = new BaseTest();
@@ -47,7 +40,8 @@ public class GetEmptyPhone {
                 .extract().response().jsonPath().getList("phones", Phone.class);
         //await().with().pollInterval(2, TimeUnit.SECONDS).atMost(1, TimeUnit.MINUTES).until();
     }
-    public List<Long> responseGetEmptyPhone(){
+
+    public List<Long> responseGetEmptyPhone() {
         Response response = RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)
@@ -58,13 +52,22 @@ public class GetEmptyPhone {
                 .get("/simcards/getEmptyPhone")
                 .then().log().all()
                 .extract().response();
-        await().pollInterval(2, TimeUnit.SECONDS).atMost(2, TimeUnit.MINUTES).until(()-> {
-            if (response.statusCode() == 200 && response.getBody().jsonPath().getList("phones", Phone.class).size() > 0) {
-                return true;
-            }
-            return null;
-        });
         List<Long> phoneNumber = response.getBody().jsonPath().getList("phones", Phone.class).stream().map(Phone::getPhone).collect(Collectors.toList());
+        while (response.getStatusCode() != 200) {
+            Response responseRef = RestAssured.given()
+                    .when()
+                    .contentType(ContentType.JSON)
+                    .header("authToken", baseTest.getTokenUser())
+                    .header("Connection", "keep-alive")
+                    .header("Accept-Encoding", "gzip, deflate, br")
+                    .header("Accept", "*/*")
+                    .get("/simcards/getEmptyPhone")
+                    .then().log().all()
+                    .extract().response();
+            if (responseRef.getStatusCode() == 200 &&
+                    !responseRef.getBody().jsonPath().getList("phones", Phone.class).stream().map(Phone::getPhone).collect(Collectors.toList()).isEmpty())
+                break;
+        }
         return phoneNumber;
     }
 }
