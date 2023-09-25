@@ -27,20 +27,6 @@ public class GetEmptyPhone {
         return phoneNumber;
     }
 
-    public void getEmptyPhoneNumberUserAwait() {
-        List<Phone> phones = RestAssured.given()
-                .when()
-                .contentType(ContentType.JSON)
-                .header("authToken", baseTest.getTokenUser())
-                .header("Connection", "keep-alive")
-                .header("Accept-Encoding", "gzip, deflate, br")
-                .header("Accept", "*/*")
-                .get("/simcards/getEmptyPhone")
-                .then().log().all()
-                .extract().response().jsonPath().getList("phones", Phone.class);
-        //await().with().pollInterval(2, TimeUnit.SECONDS).atMost(1, TimeUnit.MINUTES).until();
-    }
-
     public List<Long> responseGetEmptyPhone() {
         Response response = RestAssured.given()
                 .when()
