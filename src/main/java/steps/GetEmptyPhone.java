@@ -7,27 +7,41 @@ import models.Phone;
 import services.BaseTest;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static org.awaitility.Awaitility.await;
 
 public class GetEmptyPhone {
     BaseTest baseTest = new BaseTest();
 
     public List<Long> getEmptyPhoneNumberUser() {
-        List<Phone> phones = RestAssured.given()
-                .when()
-                .contentType(ContentType.JSON)
-                .header("authToken", baseTest.getTokenUser())
-                .header("Connection", "keep-alive")
-                .header("Accept-Encoding", "gzip, deflate, br")
-                .header("Accept", "*/*")
-                .get("/simcards/getEmptyPhone")
-                .then().log().all()
-                .extract().response().jsonPath().getList("phones", Phone.class);
-        List<Long> phoneNumber = phones.stream().map(Phone::getPhone).collect(Collectors.toList());
+        int i = 0;
+        Response response;
+        do {
+            response = RestAssured.given()
+                    .when()
+                    .contentType(ContentType.JSON)
+                    .header("authToken", baseTest.getTokenUser())
+                    .header("Connection", "keep-alive")
+                    .header("Accept-Encoding", "gzip, deflate, br")
+                    .header("Accept", "*/*")
+                    .get("/simcards/getEmptyPhone")
+                    .then().log().all()
+                    .extract().response();
+            i++;
+        }
+        while (response.getStatusCode() == 500 || response.getBody().jsonPath().getList("phones").isEmpty() || i > 5);
+        if (i > 5) {
+            System.out.println("Превышено количество выполнения цикла");
+        }
+        List<Long> phoneNumber = response.getBody().jsonPath()
+                .getList("phones", Phone.class).stream().map(Phone::getPhone).collect(Collectors.toList());
+        System.out.println(phoneNumber);
         return phoneNumber;
     }
 
-    public List<Long> responseGetEmptyPhone() {
+    public List<Long> getEmptyPhoneNumberUserWithAwait() {
         Response response = RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)
@@ -38,22 +52,11 @@ public class GetEmptyPhone {
                 .get("/simcards/getEmptyPhone")
                 .then().log().all()
                 .extract().response();
-        List<Long> phoneNumber = response.getBody().jsonPath().getList("phones", Phone.class).stream().map(Phone::getPhone).collect(Collectors.toList());
-        while (response.getStatusCode() != 200) {
-            Response responseRef = RestAssured.given()
-                    .when()
-                    .contentType(ContentType.JSON)
-                    .header("authToken", baseTest.getTokenUser())
-                    .header("Connection", "keep-alive")
-                    .header("Accept-Encoding", "gzip, deflate, br")
-                    .header("Accept", "*/*")
-                    .get("/simcards/getEmptyPhone")
-                    .then().log().all()
-                    .extract().response();
-            if (responseRef.getStatusCode() == 200 &&
-                    !responseRef.getBody().jsonPath().getList("phones", Phone.class).stream().map(Phone::getPhone).collect(Collectors.toList()).isEmpty())
-                break;
-        }
+        await().with().pollInterval(200, TimeUnit.MILLISECONDS).atMost(2, TimeUnit.SECONDS)
+                .until(() -> (response.getStatusCode() != 500 && !response.getBody().jsonPath().getList("phones").isEmpty()));
+        List<Long> phoneNumber = response.getBody().jsonPath()
+                .getList("phones", Phone.class).stream().map(Phone::getPhone).collect(Collectors.toList());
+        System.out.println(phoneNumber);
         return phoneNumber;
     }
 }

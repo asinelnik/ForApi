@@ -1,10 +1,12 @@
 package models;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class Customer {
 	private Long phone;
 	private String name;
