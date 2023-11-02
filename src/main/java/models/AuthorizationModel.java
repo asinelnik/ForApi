@@ -7,10 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 
-public class AdditionalParameters {
-    private String string;
-
+public class AuthorizationModel {
+	private String password;
+	private String login;
 }

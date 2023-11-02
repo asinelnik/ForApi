@@ -1,56 +1,54 @@
 package steps;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.AdditionalParameters;
-import models.Customer;
+import models.CreateCustomerModel;
 import org.assertj.core.api.Assertions;
-import services.BaseTest;
+import services.BaseStep;
 
 import java.util.List;
 
-public class PostCustomer {
+public class PostCustomer extends BaseStep {
     GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
-    BaseTest baseTest = new BaseTest();
-    Customer customer = new Customer();
-    AdditionalParameters additionalParameters = new AdditionalParameters();
 
-    public Response postCustomer(Long a){
-        baseTest.forSpecification();
-        customer.setName("Alex");
-        customer.setPhone(a);
-        additionalParameters.setString("param");
+    CreateCustomerModel createCustomerModel = new CreateCustomerModel();
+
+    public Response postCustomer(String name, Long phoneNum, String param) {
+        List<Long> number = getEmptyPhone.getEmptyPhoneWhile();
+        String tkn = getTokenUser();
+        forSpecification();
+        createCustomerModel.setName(name);
+        createCustomerModel.setPhone(phoneNum);
+        AdditionalParameters additionalParameters = new AdditionalParameters();
+        additionalParameters.setString(param);
+        createCustomerModel.setAdditionalParameters(additionalParameters);
         Response response = RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)
-                .header("authToken", baseTest.getTokenUser())
-                .header("Connection", "keep-alive")
-                .header("Accept-Encoding", "gzip, deflate, br")
-                .header("Accept", "*/*")
-                .body(customer)
+                .header("authToken", tkn)
+                .body(createCustomerModel)
                 .post("/customer/postCustomer")
                 .then().log().all()
                 .extract().response();
         return response;
     }
-    public List<Long> listPhoneNumber(){
-        List<Long> phones = getEmptyPhone.getEmptyPhoneNumberUser();
-        return phones;
-    }
-    public void createCustomer() {
-        List<Long> numberPhones = listPhoneNumber();
-        Integer index=0;
-        Long i = numberPhones.get(index);
-        while(postCustomer(i).getStatusCode()!=200){
-            if(postCustomer(i).getStatusCode()==400){
-                index++;
-                System.out.println(numberPhones.get(index));
-            } else {
-                continue;
+    @Step("Создание кастомера")
+    public void createCustomer(List<Long> listPhone) {
+        Response response;
+        List<Long> phones = listPhone;
+        System.out.println(phones);
+        int size = phones.size();
+        for (int i = 0; i < size; i++) {
+            response = postCustomer("Alex", phones.get(i), "param");
+            if (response.getStatusCode() == 200) {
+                Assertions.assertThat(response.getBody().jsonPath().getString("id").isEmpty()).as("Новый кастомер не создан").isFalse();
+                break;
             }
+            continue;
         }
-        String customerId = postCustomer(i).getBody().jsonPath().getString("id");
-        Assertions.assertThat(customerId).as("CustomerId не получен").isNotNull();
     }
 }
+

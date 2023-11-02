@@ -10,7 +10,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class AdditionalParameters {
-    private String string;
+public class CreateCustomerModel {
+    private Long phone;
+    private String name;
+    private AdditionalParameters additionalParameters;
 
 }

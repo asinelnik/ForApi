@@ -6,8 +6,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+public class Phones {
 
-public class Phone {
     private Long phone;
     private String locale;
 }
