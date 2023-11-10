@@ -1,21 +1,22 @@
-package models;
+package models.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ResponseMemberReturn {
-    private String pd;
-    private Long phone;
+public class CreateCustomerResponse {
     private String customerId;
     private String name;
-    private AdditionalParameters additionalParameters;
     private String status;
-
+    private Long phone;
+    private Map<String, String> additionalParameters;
+    private String pd;
 }

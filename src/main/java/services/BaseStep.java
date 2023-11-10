@@ -4,16 +4,14 @@ import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import models.AuthorizationModel;
-import org.awaitility.Awaitility;
-import org.testng.annotations.BeforeMethod;
+import models.rest.AdditionalParameters;
+import models.rest.AuthorizationModel;
+import models.rest.CreateCustomerModel;
 import org.testng.annotations.DataProvider;
 import specs.Specifications;
 
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 public class BaseStep {
+    CreateCustomerModel createCustomerModel = new CreateCustomerModel();
     AuthorizationModel authorizationModel = new AuthorizationModel();
     private final String URL = ConfigProvider.URL;
     static String USER_LOGIN = ConfigProvider.USER_LOGIN;
@@ -27,14 +25,6 @@ public class BaseStep {
                 {USER_LOGIN, USER_PASSWORD},
                 {ADMIN_LOGIN, ADMIN_PASSWORD}
         };
-    }
-
-    @BeforeMethod
-    public void setup() {
-        Awaitility.reset();
-        Awaitility.setDefaultPollDelay(100, MILLISECONDS);
-        Awaitility.setDefaultPollInterval(3, SECONDS);
-        Awaitility.setDefaultTimeout(7, SECONDS);
     }
 
     public void forSpecification() {
@@ -73,7 +63,24 @@ public class BaseStep {
                 .then()
                 .extract().response();
         return response;
+    }
 
+    public Response postCustomerB(String name, Long phoneNum, String param) {
+        forSpecification();
+        createCustomerModel.setName(name);
+        createCustomerModel.setPhone(phoneNum);
+        AdditionalParameters additionalParameters = new AdditionalParameters();
+        additionalParameters.setString(param);
+        createCustomerModel.setAdditionalParameters(additionalParameters);
+        Response response = RestAssured.given()
+                .when()
+                .contentType(ContentType.JSON)
+                .header("authToken", getTokenUser())
+                .body(createCustomerModel)
+                .post("/customer/postCustomer")
+                .then().log().all()
+                .extract().response();
+        return response;
     }
 }
 

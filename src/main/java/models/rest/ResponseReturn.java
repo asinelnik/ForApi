@@ -1,4 +1,4 @@
-package models;
+package models.rest;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class AuthorizationModel {
-	private String password;
-	private String login;
+public class ResponseReturn {
+    private CreateCustomerResponse createCustomerResponse;
 }

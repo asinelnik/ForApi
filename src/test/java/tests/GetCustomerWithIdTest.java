@@ -1,10 +1,17 @@
 package tests;
 
+import org.testng.annotations.Test;
+import steps.GetCustomer;
 import steps.GetEmptyPhone;
-import steps.PostCustomer;
 
-public class GetCustomerWithIdTest {
+public class GetCustomerWithIdTest extends GetCustomer {
     GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
-    PostCustomer postCustomer = new PostCustomer();
+
+    @Test
+    public void getCustomerInfo() throws InterruptedException {
+        String customerId = getIdFromNewCustomer(getEmptyPhone.getEmptyPhoneWhile());
+        Thread.sleep(120000);
+        getIdCustomer(customerId);
+    }
 
 }

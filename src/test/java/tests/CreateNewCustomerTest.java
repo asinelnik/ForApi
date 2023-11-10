@@ -9,7 +9,6 @@ import java.util.List;
 
 public class CreateNewCustomerTest {
     PostCustomer postCustomer = new PostCustomer();
-    BaseStep baseStep = new BaseStep();
     GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
 
     @Test
