@@ -1,13 +1,16 @@
 package models.rest;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class Phones {
+@AllArgsConstructor
 
+public class Phones {
     private Long phone;
     private String locale;
 }

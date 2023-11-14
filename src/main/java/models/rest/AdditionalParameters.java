@@ -12,5 +12,4 @@ import lombok.Setter;
 
 public class AdditionalParameters {
     private String string;
-
 }

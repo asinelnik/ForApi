@@ -7,10 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 
 public class AuthorizationModel {
-	private String password;
-	private String login;
+    private String password;
+    private String login;
 }

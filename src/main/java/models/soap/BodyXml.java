@@ -1,12 +1,13 @@
 package models.soap;
 
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
-
+@XmlRootElement(name = "Body", namespace = "soap")
 public class BodyXml {
     private Long phoneNumber;
 
-    @XmlElement
+    @XmlElement(name = "phoneNumber", namespace = "")
     public Long getPhoneNumber() {
         return phoneNumber;
     }
@@ -17,7 +18,7 @@ public class BodyXml {
 
     @Override
     public String toString() {
-        return "Body{" +
+        return "BodyXml{" +
                 "phoneNumber=" + phoneNumber +
                 '}';
     }

@@ -24,7 +24,7 @@ public class GetCustomer extends BaseStep {
         System.out.println(phones);
         int size = phones.size();
         for (int i = 0; i < size; i++) {
-            response = postCustomerB("Alex", phones.get(i), "param");
+            response = postCustomer("Alex", phones.get(i), "param");
             while (response.getStatusCode() == 200)
                 return response.getBody().jsonPath().getString("id");
         }

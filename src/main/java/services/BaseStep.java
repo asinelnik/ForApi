@@ -10,6 +10,8 @@ import models.rest.CreateCustomerModel;
 import org.testng.annotations.DataProvider;
 import specs.Specifications;
 
+import static io.restassured.RestAssured.given;
+
 public class BaseStep {
     CreateCustomerModel createCustomerModel = new CreateCustomerModel();
     AuthorizationModel authorizationModel = new AuthorizationModel();
@@ -34,7 +36,7 @@ public class BaseStep {
     public String getToken(String login, String pass) {
         authorizationModel.setLogin(login);
         authorizationModel.setPassword(pass);
-        Response response = RestAssured.given()
+        Response response = given()
                 .when()
                 .contentType(ContentType.JSON)
                 .body(authorizationModel)
@@ -55,7 +57,7 @@ public class BaseStep {
 
     public Response getEmptyPhone(String token) {
         forSpecification();
-        Response response = RestAssured.given()
+        Response response = given()
                 .when()
                 .contentType(ContentType.JSON)
                 .header("authToken", token)
@@ -65,14 +67,14 @@ public class BaseStep {
         return response;
     }
 
-    public Response postCustomerB(String name, Long phoneNum, String param) {
+    public Response postCustomer(String name, Long phoneNum, String param) {
         forSpecification();
         createCustomerModel.setName(name);
         createCustomerModel.setPhone(phoneNum);
         AdditionalParameters additionalParameters = new AdditionalParameters();
         additionalParameters.setString(param);
         createCustomerModel.setAdditionalParameters(additionalParameters);
-        Response response = RestAssured.given()
+        Response response = given()
                 .when()
                 .contentType(ContentType.JSON)
                 .header("authToken", getTokenUser())
