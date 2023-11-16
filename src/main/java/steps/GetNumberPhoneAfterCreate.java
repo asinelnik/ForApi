@@ -1,9 +1,9 @@
 package steps;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.testng.annotations.Test;
 import services.BaseStep;
 
 public class GetNumberPhoneAfterCreate {
@@ -11,8 +11,8 @@ public class GetNumberPhoneAfterCreate {
     GetCustomer getCustomer = new GetCustomer();
     GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
 
-
-    public Long phoneNumber() {
+    @Step ("Создание нового кастомера")
+    public Response phoneNumber() {
         baseStep.forSpecification();
         String id = getCustomer.getIdFromNewCustomer(getEmptyPhone.getEmptyPhoneWhile());
         String token = baseStep.getTokenUser();
@@ -24,6 +24,6 @@ public class GetNumberPhoneAfterCreate {
                 .get("/customer/getCustomerById")
                 .then().log().all()
                 .extract().response();
-        return response.jsonPath().getLong("return.phone");
+        return response;
     }
 }

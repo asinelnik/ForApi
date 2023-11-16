@@ -1,23 +1,17 @@
 package steps;
 
-import com.fasterxml.jackson.core.JacksonException;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import models.soap.BodyXml;
-import models.soap.EnvelopeXml;
-import models.soap.HeaderXml;
+import models.soap.EnvelopeResponse;
+import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 import services.BaseStep;
 import services.JaxbWorker;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import java.io.IOException;
+import javax.xml.bind.Unmarshaller;
+import java.io.StringReader;
 
 import static io.restassured.RestAssured.given;
 
@@ -26,10 +20,12 @@ public class SoapFindByPhone {
     JaxbWorker jaxbWorker = new JaxbWorker();
     GetNumberPhoneAfterCreate getNumberPhoneAfterCreate = new GetNumberPhoneAfterCreate();
 
-@Test
+    @Step
     public void soapFindByPhone() throws JAXBException {
         baseStep.forSpecification();
-        Long phone = getNumberPhoneAfterCreate.phoneNumber();
+        Response registrationCustomer = getNumberPhoneAfterCreate.phoneNumber();
+        Long phone = registrationCustomer.getBody().jsonPath().getLong("return.phone");
+        String restCustomerId = registrationCustomer.getBody().jsonPath().getString("return.customerId");
         String token = baseStep.getTokenUser();
         String body = jaxbWorker.soapRequestBody(token, phone);
         System.out.println(body);
@@ -41,7 +37,14 @@ public class SoapFindByPhone {
                 .then()
                 .log().all()
                 .extract().response();
-
+        String xmlBody = response.body().asString().toString();
+        JAXBContext context = JAXBContext.newInstance(EnvelopeResponse.class);
+        StringReader reader = new StringReader(xmlBody);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        EnvelopeResponse unmarshelledEnvelope = (EnvelopeResponse) unmarshaller.unmarshal(reader);
+        String soapCustomerId = unmarshelledEnvelope.getResponseBodyXml().getCustomerId();
+        Assertions.assertThat(soapCustomerId).as("Customer id пустой").isNotEmpty();
+        Assertions.assertThat(soapCustomerId).as("Id в старом сервисе не совпадает с Id нового сервиса").isEqualTo(restCustomerId);
     }
 }
 
