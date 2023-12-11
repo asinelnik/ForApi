@@ -12,9 +12,9 @@ public class GetEmptyPhone {
     BaseStep baseStep = new BaseStep();
 
     @Step("Получение свободных номеров")
-    public List<Long> getEmptyPhoneWhile() {
+    public List<Long> getEmptyPhoneWhile(String User, String Password) {
         Response response;
-        String tkn = baseStep.getTokenUser();
+        String tkn = baseStep.getToken(User, Password);
         do {
             response = baseStep.getEmptyPhone(tkn);
         } while (response.getBody().jsonPath().getList("phones", Phones.class)

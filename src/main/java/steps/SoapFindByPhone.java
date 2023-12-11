@@ -21,9 +21,9 @@ public class SoapFindByPhone {
     GetNumberPhoneAfterCreate getNumberPhoneAfterCreate = new GetNumberPhoneAfterCreate();
 
     @Step
-    public void soapFindByPhone() throws JAXBException {
+    public void soapFindByPhone(String Login, String Password) throws JAXBException {
         baseStep.forSpecification();
-        Response registrationCustomer = getNumberPhoneAfterCreate.phoneNumber();
+        Response registrationCustomer = getNumberPhoneAfterCreate.phoneNumber(Login, Password);
         Long phone = registrationCustomer.getBody().jsonPath().getLong("return.phone");
         String restCustomerId = registrationCustomer.getBody().jsonPath().getString("return.customerId");
         String token = baseStep.getTokenUser();

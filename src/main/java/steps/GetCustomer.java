@@ -10,12 +10,9 @@ import services.BaseStep;
 
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-
 
 public class GetCustomer extends BaseStep {
-    GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
-    PostCustomer postCustomer = new PostCustomer();
+
 
     @Step
     public String getIdFromNewCustomer(List<Long> listPhone) {

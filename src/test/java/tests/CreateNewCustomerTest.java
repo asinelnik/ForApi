@@ -11,10 +11,11 @@ public class CreateNewCustomerTest {
     PostCustomer postCustomer = new PostCustomer();
     GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
 
-    @Test
-    public void createCustomer() {
+    @Test (description = "Создание нового владельца номера", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
 
-        List<Long> num = getEmptyPhone.getEmptyPhoneWhile();
+    public void createCustomer(String Login, String Password) {
+
+        List<Long> num = getEmptyPhone.getEmptyPhoneWhile(Login, Password);
         postCustomer.createCustomer(num);
     }
 }

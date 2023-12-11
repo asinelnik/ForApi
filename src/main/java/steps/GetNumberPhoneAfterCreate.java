@@ -12,9 +12,9 @@ public class GetNumberPhoneAfterCreate {
     GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
 
     @Step ("Создание нового кастомера")
-    public Response phoneNumber() {
+    public Response phoneNumber(String Login, String Password) {
         baseStep.forSpecification();
-        String id = getCustomer.getIdFromNewCustomer(getEmptyPhone.getEmptyPhoneWhile());
+        String id = getCustomer.getIdFromNewCustomer(getEmptyPhone.getEmptyPhoneWhile(Login, Password));
         String token = baseStep.getTokenUser();
         Response response = RestAssured.given()
                 .when()

@@ -1,15 +1,16 @@
 package tests;
 
 import org.testng.annotations.Test;
+import services.BaseStep;
 import steps.GetCustomer;
 import steps.GetEmptyPhone;
 
 public class GetCustomerWithIdTest extends GetCustomer {
     GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
 
-    @Test
-    public void getCustomerInfo() throws InterruptedException {
-        String customerId = getIdFromNewCustomer(getEmptyPhone.getEmptyPhoneWhile());
+    @Test (description = "Получение информации о владельце", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
+    public void getCustomerInfo(String Login, String Password) throws InterruptedException {
+        String customerId = getIdFromNewCustomer(getEmptyPhone.getEmptyPhoneWhile(Login, Password));
         Thread.sleep(120000);
         getIdCustomer(customerId);
     }
