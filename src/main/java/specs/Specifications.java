@@ -1,5 +1,6 @@
 package specs;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -11,6 +12,7 @@ public class Specifications {
 
     public static RequestSpecification requestSpec(String url) {
         return new RequestSpecBuilder()
+                .addFilter(new AllureRestAssured())
                 .setBaseUri(url)
                 .setContentType(ContentType.JSON)
                 .build();

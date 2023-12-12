@@ -1,7 +1,7 @@
 package services;
 
 import io.qameta.allure.Step;
-import io.restassured.RestAssured;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.rest.AdditionalParameters;
@@ -37,6 +37,7 @@ public class BaseStep {
         authorizationModel.setLogin(login);
         authorizationModel.setPassword(pass);
         Response response = given()
+                .filter(new AllureRestAssured())
                 .when()
                 .contentType(ContentType.JSON)
                 .body(authorizationModel)
