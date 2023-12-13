@@ -21,4 +21,13 @@ public class GetEmptyPhone {
                 .stream().map(Phones::getPhone).collect(Collectors.toList()).size() < 3);
         return response.getBody().jsonPath().getList("phones", Phones.class).stream().map(Phones::getPhone).collect(Collectors.toList());
     }
+    @Step("Получение свободных номеров")
+    public List<Long> getEmptyPhoneWhile(String token) {
+        Response response;
+        do {
+            response = baseStep.getEmptyPhone(token);
+        } while (response.getBody().jsonPath().getList("phones", Phones.class)
+                .stream().map(Phones::getPhone).collect(Collectors.toList()).size() < 3);
+        return response.getBody().jsonPath().getList("phones", Phones.class).stream().map(Phones::getPhone).collect(Collectors.toList());
+    }
 }
