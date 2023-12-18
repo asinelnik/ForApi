@@ -14,6 +14,6 @@ public class ChangeCustomerStatusTest {
     public void changeCustomerStatus() {
         String token = baseStep.getTokenAdmin();
         Response res = postChangeCustomerStatus.postChangeCustomerStatus(token);
-        Assertions.assertThat(res.getStatusCode()).as("").isEqualTo(200);
+        Assertions.assertThat(res.getStatusCode()).as("Некорректный статус код ответа сервера").isEqualTo(200);
     }
 }

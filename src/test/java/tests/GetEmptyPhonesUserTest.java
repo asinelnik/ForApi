@@ -2,12 +2,13 @@ package tests;
 
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
-import org.assertj.core.api.Assertions;
 import org.testng.annotations.Test;
 import services.BaseStep;
 import steps.GetEmptyPhone;
 
 import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class GetEmptyPhonesUserTest {
     GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
@@ -17,7 +18,6 @@ public class GetEmptyPhonesUserTest {
     public void getEmptyPhoneNumberUserAwait(String Login, String Password) {
         RestAssured.filters(new AllureRestAssured());
         List<Long> telnum = getEmptyPhone.getEmptyPhoneWhile(Login, Password);
-        System.out.println(telnum);
-        Assertions.assertThat(telnum.size() > 0);
+        assertThat(!telnum.isEmpty()).as("Список номеров пуст").isTrue();
     }
 }

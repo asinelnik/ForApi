@@ -4,7 +4,6 @@ import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import models.soap.EnvelopeResponse;
 import org.assertj.core.api.Assertions;
-import org.testng.annotations.Test;
 import services.BaseStep;
 import services.JaxbWorker;
 
