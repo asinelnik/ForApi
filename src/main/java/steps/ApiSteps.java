@@ -9,6 +9,7 @@ import models.rest.AdditionalParameters;
 import models.rest.AuthorizationModel;
 import models.rest.ChangeStatusModel;
 import models.rest.CreateCustomerModel;
+import services.JaxbWorker;
 
 import javax.xml.bind.JAXBException;
 
@@ -18,6 +19,7 @@ public class ApiSteps {
     AuthorizationModel authorizationModel = new AuthorizationModel();
     ChangeStatusModel changeStatusModel = new ChangeStatusModel();
     CreateCustomerModel createCustomerModel = new CreateCustomerModel();
+    JaxbWorker jaxbWorker = new JaxbWorker();
 
     @Step("Получение токена")
     public Response getToken(String login, String pass) {
@@ -46,6 +48,7 @@ public class ApiSteps {
                 .extract().response();
         return response;
     }
+
     @Step("Регистрация владельца номера телефона")
     public Response postCustomer(String name, Long phoneNum, String param, String token) {
         createCustomerModel.setName(name);
@@ -91,14 +94,10 @@ public class ApiSteps {
                 .extract().response();
         return response;
     }
-    @Step("")
-    public void soapFindByPhone(String Login, String Password) throws JAXBException {
-        Response registrationCustomer = phoneNumber(Login, Password);
-        Long phone = registrationCustomer.getBody().jsonPath().getLong("return.phone");
-        String restCustomerId = registrationCustomer.getBody().jsonPath().getString("return.customerId");
-        String token = baseStep.getTokenUser();
+
+    @Step("Получение id владельца в сервисе SOAP")
+    public Response soapFindByPhone(String token, Long phone) throws JAXBException {
         String body = jaxbWorker.soapRequestBody(token, phone);
-        System.out.println(body);
         Response response = given()
                 .when()
                 .contentType("application/xml")
@@ -107,7 +106,6 @@ public class ApiSteps {
                 .then()
                 .log().all()
                 .extract().response();
+        return response;
     }
-
-
 }
