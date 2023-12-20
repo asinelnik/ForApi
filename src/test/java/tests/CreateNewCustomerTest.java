@@ -1,20 +1,18 @@
 package tests;
 
 import org.testng.annotations.Test;
-import services.BaseStep;
-import steps.GetEmptyPhone;
-import steps.PostCustomer;
+import steps.GetEmptyPhoneStep;
+import steps.PostCustomerStep;
 
 import java.util.List;
 
 public class CreateNewCustomerTest {
-    PostCustomer postCustomer = new PostCustomer();
-    GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
+    PostCustomerStep postCustomerStep = new PostCustomerStep();
+    GetEmptyPhoneStep getEmptyPhoneStep = new GetEmptyPhoneStep();
 
-    @Test(description = "Создание нового владельца номера", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
-
-    public void createCustomer(String Login, String Password) {
-        List<Long> num = getEmptyPhone.getEmptyPhoneWhile(Login, Password);
-        postCustomer.createCustomer(num);
+    @Test //(description = "Создание нового владельца номера", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
+    public void createCustomer(String token) {
+        List<Long> num = getEmptyPhoneStep.getEmptyPhoneWhile(token);
+        postCustomerStep.createCustomer(num,token);
     }
 }

@@ -8,14 +8,13 @@ import services.BaseStep;
 
 public class GetNumberPhoneAfterCreate {
     BaseStep baseStep = new BaseStep();
-    GetCustomer getCustomer = new GetCustomer();
-    GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
+    GetCustomerStep getCustomerStep = new GetCustomerStep();
+    GetEmptyPhoneStep getEmptyPhone = new GetEmptyPhoneStep();
 
-    @Step ("Создание нового кастомера")
-    public Response phoneNumber(String Login, String Password) {
+   @Step ("Создание нового кастомера")
+    public Response phoneNumber(String token) {
         baseStep.forSpecification();
-        String id = getCustomer.getIdFromNewCustomer(getEmptyPhone.getEmptyPhoneWhile(Login, Password));
-        String token = baseStep.getTokenUser();
+        String id = getCustomerStep.getIdFromNewCustomer(getEmptyPhone.getEmptyPhoneWhile(token));
         Response response = RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)

@@ -19,13 +19,12 @@ public class SoapFindByPhone {
     JaxbWorker jaxbWorker = new JaxbWorker();
     GetNumberPhoneAfterCreate getNumberPhoneAfterCreate = new GetNumberPhoneAfterCreate();
 
-    @Step
-    public void soapFindByPhone(String Login, String Password) throws JAXBException {
+   @Step
+    public void soapFindByPhone(String token) throws JAXBException {
         baseStep.forSpecification();
-        Response registrationCustomer = getNumberPhoneAfterCreate.phoneNumber(Login, Password);
+        Response registrationCustomer = getNumberPhoneAfterCreate.phoneNumber(token);
         Long phone = registrationCustomer.getBody().jsonPath().getLong("return.phone");
         String restCustomerId = registrationCustomer.getBody().jsonPath().getString("return.customerId");
-        String token = baseStep.getTokenUser();
         String body = jaxbWorker.soapRequestBody(token, phone);
         System.out.println(body);
         Response response = given()

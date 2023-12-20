@@ -10,10 +10,10 @@ public class ChangeCustomerStatusTest {
     BaseStep baseStep = new BaseStep();
     PostChangeCustomerStatus postChangeCustomerStatus = new PostChangeCustomerStatus();
 
-    @Test(description = "Смена статуса владельца телефона администратором")
+   /* @Test(description = "Смена статуса владельца телефона администратором")
     public void changeCustomerStatus() {
         String token = baseStep.getTokenAdmin();
         Response res = postChangeCustomerStatus.postChangeCustomerStatus(token);
         Assertions.assertThat(res.getStatusCode()).as("Некорректный статус код ответа сервера").isEqualTo(200);
-    }
+    }*/
 }

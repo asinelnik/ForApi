@@ -1,20 +1,19 @@
 package tests;
 
-import io.qameta.allure.restassured.AllureRestAssured;
-import io.restassured.RestAssured;
 import org.testng.annotations.Test;
 import services.BaseStep;
-import steps.GetCustomer;
-import steps.GetEmptyPhone;
+import steps.GetCustomerStep;
+import steps.GetEmptyPhoneStep;
+import steps.PostCustomerStep;
 
-public class GetCustomerWithIdTest extends GetCustomer {
-    GetEmptyPhone getEmptyPhone = new GetEmptyPhone();
+public class GetCustomerWithIdTest extends BaseStep {
+    PostCustomerStep postCustomerStep = new PostCustomerStep();
+    GetEmptyPhoneStep getEmptyPhoneStep = new GetEmptyPhoneStep();
+    GetCustomerStep getCustomerStep = new GetCustomerStep();
 
-    @Test(description = "Получение информации о владельце", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
-    public void getCustomerInfo(String Login, String Password) throws InterruptedException {
-        RestAssured.filters(new AllureRestAssured());
-        String customerId = getIdFromNewCustomer(getEmptyPhone.getEmptyPhoneWhile(Login, Password));
-        Thread.sleep(120000);
-        getIdCustomer(customerId);
+    @Test(description = "Получение информации о владельце")
+    public void getCustomerInfo(String token) throws InterruptedException {
+        forSpecification();
+        String passport = getCustomerStep.getIdCustomer(postCustomerStep.createNewCustomer(getEmptyPhoneStep.getEmptyPhoneWhile(token), token), token);
     }
 }

@@ -4,7 +4,6 @@ import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import models.rest.AdditionalParameters;
 import models.rest.AuthorizationModel;
 import models.rest.CreateCustomerModel;
 import org.testng.annotations.DataProvider;
@@ -54,36 +53,6 @@ public class BaseStep {
     @Step
     public String getTokenAdmin() {
         return getToken(ADMIN_LOGIN, ADMIN_PASSWORD);
-    }
-
-    public Response getEmptyPhone(String token) {
-        forSpecification();
-        Response response = given()
-                .when()
-                .contentType(ContentType.JSON)
-                .header("authToken", token)
-                .get("/simcards/getEmptyPhone")
-                .then()
-                .extract().response();
-        return response;
-    }
-
-    public Response postCustomer(String name, Long phoneNum, String param) {
-        forSpecification();
-        createCustomerModel.setName(name);
-        createCustomerModel.setPhone(phoneNum);
-        AdditionalParameters additionalParameters = new AdditionalParameters();
-        additionalParameters.setString(param);
-        createCustomerModel.setAdditionalParameters(additionalParameters);
-        Response response = given()
-                .when()
-                .contentType(ContentType.JSON)
-                .header("authToken", getTokenUser())
-                .body(createCustomerModel)
-                .post("/customer/postCustomer")
-                .then().log().all()
-                .extract().response();
-        return response;
     }
 }
 

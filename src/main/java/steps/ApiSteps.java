@@ -68,7 +68,7 @@ public class ApiSteps {
     }
 
     @Step("Получение владельца по id")
-    public Response phoneNumber(String id, String token) {
+    public Response getCustomerById (String id, String token) {
         Response response = RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)
