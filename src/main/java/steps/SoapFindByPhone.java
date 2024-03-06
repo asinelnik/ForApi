@@ -17,32 +17,23 @@ import static io.restassured.RestAssured.given;
 public class SoapFindByPhone {
     BaseStep baseStep = new BaseStep();
     JaxbWorker jaxbWorker = new JaxbWorker();
+    ApiSteps apiSteps = new ApiSteps();
     GetNumberPhoneAfterCreate getNumberPhoneAfterCreate = new GetNumberPhoneAfterCreate();
 
-   @Step
-    public void soapFindByPhone(String token) throws JAXBException {
+   @Step("Проверка регистрации владельца в сервисе Soap")
+    public String soapFindByPhone(String token, Long phone) throws JAXBException {
         baseStep.forSpecification();
-        Response registrationCustomer = getNumberPhoneAfterCreate.phoneNumber(token);
-        Long phone = registrationCustomer.getBody().jsonPath().getLong("return.phone");
-        String restCustomerId = registrationCustomer.getBody().jsonPath().getString("return.customerId");
         String body = jaxbWorker.soapRequestBody(token, phone);
-        System.out.println(body);
-        Response response = given()
-                .when()
-                .contentType("application/xml")
-                .body(body)
-                .post("/customer/findByPhoneNumber")
-                .then()
-                .log().all()
-                .extract().response();
+        Response response = apiSteps.soapFindByPhone(body);
         String xmlBody = response.body().asString().toString();
         JAXBContext context = JAXBContext.newInstance(EnvelopeResponse.class);
         StringReader reader = new StringReader(xmlBody);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         EnvelopeResponse unmarshelledEnvelope = (EnvelopeResponse) unmarshaller.unmarshal(reader);
         String soapCustomerId = unmarshelledEnvelope.getResponseBodyXml().getCustomerId();
-        Assertions.assertThat(soapCustomerId).as("Customer id пустой").isNotEmpty();
-        Assertions.assertThat(soapCustomerId).as("Id в старом сервисе не совпадает с Id нового сервиса").isEqualTo(restCustomerId);
+        return soapCustomerId;
+        //Assertions.assertThat(soapCustomerId).as("Customer id пустой").isNotEmpty();
+        //Assertions.assertThat(soapCustomerId).as("Id в старом сервисе не совпадает с Id нового сервиса").isEqualTo(restCustomerId);
     }
 }
 

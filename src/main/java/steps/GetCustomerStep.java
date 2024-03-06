@@ -25,4 +25,16 @@ public class GetCustomerStep extends BaseStep {
         Response response = apiSteps.getCustomerById(id, token);
         return response.jsonPath().get("return.pd");
     }
+
+    @Step("Получение информации о владельце телефона по id")
+    public Response getCustomerInfo(String id, String token) {
+        await().atMost(2, TimeUnit.MINUTES).with().pollInterval(5, TimeUnit.SECONDS).until(() -> {
+            Response res = apiSteps.getCustomerById(id, token);
+            if (res.jsonPath().getString("return.status").equals("ACTIVE")) {
+                return true;
+            }
+            return false;
+        });
+        return apiSteps.getCustomerById(id, token);
+    }
 }

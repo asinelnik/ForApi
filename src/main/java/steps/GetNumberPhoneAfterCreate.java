@@ -11,10 +11,10 @@ public class GetNumberPhoneAfterCreate {
     GetCustomerStep getCustomerStep = new GetCustomerStep();
     GetEmptyPhoneStep getEmptyPhone = new GetEmptyPhoneStep();
 
-   @Step ("Создание нового кастомера")
+   /*@Step ("Создание нового кастомера")
     public Response phoneNumber(String token) {
         baseStep.forSpecification();
-        String id = getCustomerStep.getIdFromNewCustomer(getEmptyPhone.getEmptyPhoneWhile(token));
+        String id = getCustomerStep.createNewCustomer(getEmptyPhone.getEmptyPhoneWhile(token));
         Response response = RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)
@@ -24,5 +24,5 @@ public class GetNumberPhoneAfterCreate {
                 .then().log().all()
                 .extract().response();
         return response;
-    }
+    }*/
 }

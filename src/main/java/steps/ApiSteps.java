@@ -68,7 +68,7 @@ public class ApiSteps {
     }
 
     @Step("Получение владельца по id")
-    public Response getCustomerById (String id, String token) {
+    public Response getCustomerById(String id, String token) {
         Response response = RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)
@@ -81,8 +81,8 @@ public class ApiSteps {
     }
 
     @Step("Изменение статуса владельца телефона")
-    public Response postChangeCustomerStatus(String token, String customerId) {
-        changeStatusModel.setStatus("Disable");
+    public Response postChangeCustomerStatus(String token, String customerId, String status) {
+        changeStatusModel.setStatus(status);
         Response response = given()
                 .when()
                 .contentType(ContentType.JSON)
@@ -96,8 +96,7 @@ public class ApiSteps {
     }
 
     @Step("Получение id владельца в сервисе SOAP")
-    public Response soapFindByPhone(String token, Long phone) throws JAXBException {
-        String body = jaxbWorker.soapRequestBody(token, phone);
+    public Response soapFindByPhone(String body) throws JAXBException {
         Response response = given()
                 .when()
                 .contentType("application/xml")
