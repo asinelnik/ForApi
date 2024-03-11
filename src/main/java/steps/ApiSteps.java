@@ -5,31 +5,18 @@ import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import models.rest.AdditionalParameters;
-import models.rest.AuthorizationModel;
-import models.rest.ChangeStatusModel;
-import models.rest.CreateCustomerModel;
-import services.JaxbWorker;
-
-import javax.xml.bind.JAXBException;
 
 import static io.restassured.RestAssured.given;
 
 public class ApiSteps {
-    AuthorizationModel authorizationModel = new AuthorizationModel();
-    ChangeStatusModel changeStatusModel = new ChangeStatusModel();
-    CreateCustomerModel createCustomerModel = new CreateCustomerModel();
-    JaxbWorker jaxbWorker = new JaxbWorker();
 
     @Step("Получение токена")
-    public Response getToken(String login, String pass) {
-        authorizationModel.setLogin(login);
-        authorizationModel.setPassword(pass);
+    public Response getToken(Object body) {
         Response response = given()
                 .filter(new AllureRestAssured())
                 .when()
                 .contentType(ContentType.JSON)
-                .body(authorizationModel)
+                .body(body)
                 .post("/login")
                 .then()
                 .log().all()
@@ -50,17 +37,12 @@ public class ApiSteps {
     }
 
     @Step("Регистрация владельца номера телефона")
-    public Response postCustomer(String name, Long phoneNum, String param, String token) {
-        createCustomerModel.setName(name);
-        createCustomerModel.setPhone(phoneNum);
-        AdditionalParameters additionalParameters = new AdditionalParameters();
-        additionalParameters.setString(param);
-        createCustomerModel.setAdditionalParameters(additionalParameters);
+    public Response postCustomer(String token, Object body) {
         Response response = given()
                 .when()
                 .contentType(ContentType.JSON)
                 .header("authToken", token)
-                .body(createCustomerModel)
+                .body(body)
                 .post("/customer/postCustomer")
                 .then().log().all()
                 .extract().response();
@@ -81,13 +63,12 @@ public class ApiSteps {
     }
 
     @Step("Изменение статуса владельца телефона")
-    public Response postChangeCustomerStatus(String token, String customerId, String status) {
-        changeStatusModel.setStatus(status);
+    public Response postChangeCustomerStatus(String token, String customerId, Object body) {
         Response response = given()
                 .when()
                 .contentType(ContentType.JSON)
                 .header("authToken", token)
-                .body(changeStatusModel)
+                .body(body)
                 .post("/customer/" + customerId + "/changeCustomerStatus")
                 .then()
                 .log().all()
@@ -96,7 +77,7 @@ public class ApiSteps {
     }
 
     @Step("Получение id владельца в сервисе SOAP")
-    public Response soapFindByPhone(String body) throws JAXBException {
+    public Response soapFindByPhone(String body) {
         Response response = given()
                 .when()
                 .contentType("application/xml")

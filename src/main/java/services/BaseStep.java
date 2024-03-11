@@ -1,18 +1,13 @@
 package services;
 
 import io.qameta.allure.Step;
-import io.qameta.allure.restassured.AllureRestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import models.rest.AuthorizationModel;
-import models.rest.CreateCustomerModel;
 import org.testng.annotations.DataProvider;
 import specs.Specifications;
-
-import static io.restassured.RestAssured.given;
+import steps.ApiSteps;
 
 public class BaseStep {
-    CreateCustomerModel createCustomerModel = new CreateCustomerModel();
+    ApiSteps apiSteps = new ApiSteps();
     AuthorizationModel authorizationModel = new AuthorizationModel();
     private final String URL = ConfigProvider.URL;
     static String USER_LOGIN = ConfigProvider.USER_LOGIN;
@@ -32,27 +27,18 @@ public class BaseStep {
         Specifications.installSpecification(Specifications.requestSpec(URL), Specifications.responseSpecOk200());
     }
 
-    public String getToken(String login, String pass) {
-        authorizationModel.setLogin(login);
-        authorizationModel.setPassword(pass);
-        Response response = given()
-                .filter(new AllureRestAssured())
-                .when()
-                .contentType(ContentType.JSON)
-                .body(authorizationModel)
-                .post("/login");
-        String token = response.jsonPath().getString("token");
-        return token;
-    }
-
     @Step
     public String getTokenUser() {
-        return getToken(USER_LOGIN, USER_PASSWORD);
+        authorizationModel.setLogin(USER_LOGIN);
+        authorizationModel.setPassword(USER_PASSWORD);
+        return apiSteps.getToken(authorizationModel).jsonPath().getString("token");
     }
 
     @Step
     public String getTokenAdmin() {
-        return getToken(ADMIN_LOGIN, ADMIN_PASSWORD);
+        authorizationModel.setLogin(ADMIN_LOGIN);
+        authorizationModel.setPassword(ADMIN_PASSWORD);
+        return apiSteps.getToken(authorizationModel).jsonPath().getString("token");
     }
 }
 

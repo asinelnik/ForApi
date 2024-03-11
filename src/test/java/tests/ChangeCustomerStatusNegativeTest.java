@@ -3,6 +3,7 @@ package tests;
 import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import services.BaseStep;
+import steps.ApiSteps;
 import steps.PostChangeCustomerStatus;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

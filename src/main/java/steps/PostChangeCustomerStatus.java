@@ -13,22 +13,14 @@ public class PostChangeCustomerStatus {
     GetEmptyPhoneStep getEmptyPhone = new GetEmptyPhoneStep();
     BaseStep baseStep = new BaseStep();
     ChangeStatusModel changeStatusModel = new ChangeStatusModel();
+    ApiSteps apiSteps = new ApiSteps();
 
 
-  /*  @Step("Смена статуса владельца")
+    /*@Step("Смена статуса владельца")
     public Response postChangeCustomerStatus(String token) {
         baseStep.forSpecification();
         changeStatusModel.setStatus("Disable");
-        Response response = given()
-                .when()
-                .contentType(ContentType.JSON)
-                .header("authToken", token)
-                .body(changeStatusModel)
-                .post("/customer/" + getCustomerStep.getIdFromNewCustomer(getEmptyPhone.getEmptyPhoneWhile(token)) + "/changeCustomerStatus")
-                .then()
-                .log().all()
-                .extract().response();
-        return response;
+        Response res = apiSteps.postChangeCustomerStatus(baseStep.getTokenAdmin(), ,changeStatusModel);
     }*/
 }
 
