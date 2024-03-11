@@ -1,22 +1,31 @@
 package tests;
 
 import io.restassured.response.Response;
+import models.rest.ChangeStatusModel;
 import org.testng.annotations.Test;
 import services.BaseStep;
 import steps.ApiSteps;
-import steps.PostChangeCustomerStatus;
+import steps.GetEmptyPhoneStep;
+import steps.PostCustomerStep;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class ChangeCustomerStatusNegativeTest {
     BaseStep baseStep = new BaseStep();
-    PostChangeCustomerStatus postChangeCustomerStatus = new PostChangeCustomerStatus();
+    ApiSteps apiSteps = new ApiSteps();
+    ChangeStatusModel changeStatusModel = new ChangeStatusModel();
+    PostCustomerStep postCustomerStep = new PostCustomerStep();
+    GetEmptyPhoneStep getEmptyPhoneStep = new GetEmptyPhoneStep();
 
-    /*@Test(description = "Смена статуса владельца телефона обычным пользователем")
+    @Test(description = "Смена статуса владельца телефона администратором")
     public void changeCustomerStatus() {
+        String newStatus = "DISABLE";
+        changeStatusModel.setStatus(newStatus);
         String token = baseStep.getTokenUser();
-        Response res = postChangeCustomerStatus.postChangeCustomerStatus(token);
-        assertThat(res.getStatusCode()).as("Получен некорректный статус кода").isEqualTo(401);
-        assertThat(res.getBody().jsonPath().get("errorMessage").toString()).as("Некорректное сообщение об ошибке").isEqualTo("У пользователя не хватает прав на выполнение команды");
-    }*/
+        String idCustomer = postCustomerStep.createNewCustomer(getEmptyPhoneStep.getEmptyPhoneWhile(token), token);
+        Response changeStatus = apiSteps.postChangeCustomerStatus(token, idCustomer, changeStatusModel);
+        assertThat(changeStatus.getStatusCode()).as("Некорректный статус код ответа сервера").isEqualTo(401);
+        assertThat(changeStatus.jsonPath().getString("errorMessage")).as("Текст ошибки не соответствует заданному")
+                .isEqualTo("У пользователя не хватает прав на выполнение команды");
+    }
 }
