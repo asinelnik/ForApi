@@ -15,4 +15,12 @@ public class CreateCustomerModel {
     private String name;
     private AdditionalParameters additionalParameters;
 
+    @Override
+    public String toString() {
+        return "CreateCustomerModel{" +
+                "phone=" + phone +
+                ", name='" + name + '\'' +
+                ", additionalParameters=" + additionalParameters +
+                '}';
+    }
 }

@@ -1,7 +1,16 @@
 package models.soap;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+@Getter
+@Setter
+@NoArgsConstructor
+
 
 @XmlRootElement(namespace = "http://schemas.xmlsoap.org/soap/envelope", name = "Envelope")
 public class EnvelopeXml {
@@ -25,6 +34,11 @@ public class EnvelopeXml {
     }
 
     public void setBodyXml(BodyXml bodyXml) {
+        this.bodyXml = bodyXml;
+    }
+
+    public EnvelopeXml(HeaderXml headerXml, BodyXml bodyXml) {
+        this.headerXml = headerXml;
         this.bodyXml = bodyXml;
     }
 

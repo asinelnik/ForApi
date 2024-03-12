@@ -16,7 +16,7 @@ public class GetEmptyPhoneStep {
         do {
             response = apiSteps.getEmptyPhone(token);
         } while (response.getBody().jsonPath().getList("phones", Phones.class)
-                .stream().map(Phones::getPhone).collect(Collectors.toList()).size() < 5);
+                .stream().map(Phones::getPhone).collect(Collectors.toList()).size() < 7);
         return response.getBody().jsonPath().getList("phones", Phones.class).stream().map(Phones::getPhone).collect(Collectors.toList());
     }
 }

@@ -10,7 +10,16 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 
+
 public class AuthorizationModel {
-    private String password;
     private String login;
+    private String password;
+
+    @Override
+    public String toString() {
+        return "AuthorizationModel{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

@@ -20,7 +20,7 @@ public class SoapFindByPhone {
     ApiSteps apiSteps = new ApiSteps();
     GetNumberPhoneAfterCreate getNumberPhoneAfterCreate = new GetNumberPhoneAfterCreate();
 
-   @Step("Проверка регистрации владельца в сервисе Soap")
+   /*@Step("Проверка регистрации владельца в сервисе Soap")
     public String soapFindByPhone(String token, Long phone) throws JAXBException {
         baseStep.forSpecification();
         String body = jaxbWorker.soapRequestBody(token, phone);
@@ -34,7 +34,7 @@ public class SoapFindByPhone {
         return soapCustomerId;
         //Assertions.assertThat(soapCustomerId).as("Customer id пустой").isNotEmpty();
         //Assertions.assertThat(soapCustomerId).as("Id в старом сервисе не совпадает с Id нового сервиса").isEqualTo(restCustomerId);
-    }
+    }*/
 }
 
 

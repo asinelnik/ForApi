@@ -16,6 +16,13 @@ public class BodyXml {
         this.phoneNumber = phoneNumber;
     }
 
+    public BodyXml() {
+    }
+
+    public BodyXml(Long phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     public String toString() {
         return "BodyXml{" +

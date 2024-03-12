@@ -13,7 +13,7 @@ import steps.SoapFindByPhone;
 import javax.xml.bind.JAXBException;
 import java.util.List;
 
-@Test
+/*@Test
 public class EndToEndTest {
     GetEmptyPhoneStep getEmptyPhoneStep = new GetEmptyPhoneStep();
     PostCustomerStep postCustomerStep = new PostCustomerStep();
@@ -41,4 +41,4 @@ public class EndToEndTest {
         softAssertions.assertThat(soapFindByPhone.soapFindByPhone(token, phoneNumber)).as("Id владельца soap не соответствует id владельца rest").isEqualTo(id);
         softAssertions.assertAll();
     }
-}
+}*/

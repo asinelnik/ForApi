@@ -1,4 +1,5 @@
 package steps;
+
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import models.rest.AdditionalParameters;
@@ -56,7 +57,5 @@ public class PostCustomerStep extends BaseStep {
             }
         }
     }
-
-
 }
 

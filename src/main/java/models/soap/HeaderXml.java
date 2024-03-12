@@ -16,6 +16,12 @@ public class HeaderXml {
         this.authToken = authToken;
     }
 
+    public HeaderXml() {
+    }
+
+    public HeaderXml(String authToken) {
+        this.authToken = authToken;
+    }
     @Override
     public String toString() {
         return "HeaderXml{" +

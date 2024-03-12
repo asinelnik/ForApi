@@ -12,4 +12,11 @@ import lombok.Setter;
 
 public class AdditionalParameters {
     private String string;
+
+    @Override
+    public String toString() {
+        return "AdditionalParameters{" +
+                "string='" + string + '\'' +
+                '}';
+    }
 }
