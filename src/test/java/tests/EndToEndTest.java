@@ -1,18 +1,5 @@
 package tests;
 
-import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import org.assertj.core.api.SoftAssertions;
-import org.testng.annotations.Test;
-import services.BaseStep;
-import steps.GetCustomerStep;
-import steps.GetEmptyPhoneStep;
-import steps.PostCustomerStep;
-import steps.SoapFindByPhone;
-
-import javax.xml.bind.JAXBException;
-import java.util.List;
-
 /*@Test
 public class EndToEndTest {
     GetEmptyPhoneStep getEmptyPhoneStep = new GetEmptyPhoneStep();

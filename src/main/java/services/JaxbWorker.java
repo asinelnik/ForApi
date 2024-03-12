@@ -1,8 +1,6 @@
 package services;
 
 import models.soap.EnvelopeResponse;
-import models.soap.EnvelopeXml;
-import models.soap.ResponseBodyXml;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -23,7 +21,7 @@ public class JaxbWorker {
     }
 
     public String unmarshallerEnvelopeBody(String xmlBody) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(ResponseBodyXml.class);
+        JAXBContext context = JAXBContext.newInstance(EnvelopeResponse.class);
         StringReader reader = new StringReader(xmlBody);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         EnvelopeResponse unmarshallerEnvelope = (EnvelopeResponse) unmarshaller.unmarshal(reader);
