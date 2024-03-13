@@ -17,7 +17,7 @@ public class GetCustomerWithIdTest extends BaseStep {
     ApiSteps apiSteps = new ApiSteps();
     RandomStringGenerator randomStringGenerator = new RandomStringGenerator();
 
-    @Test(description = "Получение информации о владельце", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
+    @Test(testName = "Получение информации о владельце", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
     public void getCustomerInfo(String login, String pass) {
         AuthorizationModel authorizationModel = new AuthorizationModel(login, pass);
         String token = apiSteps.getToken(authorizationModel).jsonPath().getString("token");

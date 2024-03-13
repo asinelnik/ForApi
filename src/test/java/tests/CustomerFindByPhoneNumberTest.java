@@ -1,9 +1,7 @@
 package tests;
 
 import io.restassured.response.Response;
-import models.rest.AdditionalParameters;
 import models.rest.AuthorizationModel;
-import models.rest.CreateCustomerModel;
 import models.soap.BodyXml;
 import models.soap.EnvelopeXml;
 import models.soap.HeaderXml;
@@ -23,7 +21,7 @@ public class CustomerFindByPhoneNumberTest extends BaseStep {
     JaxbWorker jaxbWorker = new JaxbWorker();
     ApiSteps apiSteps = new ApiSteps();
 
-    @Test(description = "Проверка регистрации владельца в SOAP", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
+    @Test(testName = "Проверка регистрации владельца в SOAP", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
     public void customerFindByPhoneNumber(String login, String pass) throws JAXBException {
         Response response;
         int i = 0;
