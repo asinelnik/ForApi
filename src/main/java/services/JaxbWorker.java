@@ -10,8 +10,8 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 public class JaxbWorker {
-    public String soapRequestBody(Object bodyXml, Class clazz) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(clazz);
+    public String soapRequestBody(Object bodyXml, Class responseType) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(responseType);
         StringWriter writer = new StringWriter();
 
         Marshaller marshaller = context.createMarshaller();

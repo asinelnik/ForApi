@@ -1,6 +1,7 @@
 package steps;
 
 import io.qameta.allure.Step;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import services.BaseStep;
 
@@ -14,7 +15,7 @@ public class GetCustomerStep extends BaseStep {
     ApiSteps apiSteps = new ApiSteps();
 
     @Step("Получение владельца телефона по id с проверкой серии и номера паспорта")
-    public String getIdCustomer(String id, String token) {
+    public Object getIdCustomer(String id, String token) {
         await().atMost(2, TimeUnit.MINUTES).with().pollInterval(5, TimeUnit.SECONDS).until(() -> {
             Response res = apiSteps.getCustomerById(id, token);
             if (res.jsonPath().getString("return.status").equals("ACTIVE")) {

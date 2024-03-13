@@ -12,15 +12,13 @@ import services.BaseStep;
 import services.JaxbWorker;
 import services.RandomStringGenerator;
 import steps.ApiSteps;
-import steps.GetEmptyPhoneStep;
 
 import javax.xml.bind.JAXBException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CustomerFindByPhoneNumberTest {
-    GetEmptyPhoneStep getEmptyPhoneStep = new GetEmptyPhoneStep();
+public class CustomerFindByPhoneNumberTest extends BaseStep {
     RandomStringGenerator randomStringGenerator = new RandomStringGenerator();
     JaxbWorker jaxbWorker = new JaxbWorker();
     ApiSteps apiSteps = new ApiSteps();
@@ -31,8 +29,7 @@ public class CustomerFindByPhoneNumberTest {
         int i = 0;
         AuthorizationModel authorizationModel = new AuthorizationModel(login, pass);
         String token = apiSteps.getToken(authorizationModel).jsonPath().getString("token");
-        System.out.println(token);
-        List<Long> num = getEmptyPhoneStep.getEmptyPhoneWhile(token);
+        List<Long> num = getEmptyPhoneWhile(token);
         Long phoneNum = num.get(i);
         AdditionalParameters additionalParameters = new AdditionalParameters(randomStringGenerator.generateRandomString(10));
         CreateCustomerModel createCustomerModel = new CreateCustomerModel(phoneNum, randomStringGenerator.generateRandomString(7), additionalParameters);
@@ -45,10 +42,8 @@ public class CustomerFindByPhoneNumberTest {
         BodyXml bodyXml = new BodyXml(phoneNum);
         EnvelopeXml envelopeXml = new EnvelopeXml(headerXml, bodyXml);
         String body = jaxbWorker.soapRequestBody(envelopeXml, EnvelopeXml.class);
-        System.out.println(body);
         String bodyResponse = apiSteps.soapFindByPhone(body).getBody().asString();
         String idCustomerSoap = jaxbWorker.unmarshallerEnvelopeBody(bodyResponse);
-        System.out.println(idCustomerRest = idCustomerSoap);
         assertThat(idCustomerSoap).as("Id customer не соответствует id в Rest").isEqualTo(idCustomerRest);
     }
 }

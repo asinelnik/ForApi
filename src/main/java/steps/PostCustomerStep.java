@@ -43,13 +43,8 @@ public class PostCustomerStep extends BaseStep {
         List<Long> phones = listPhone;
         int size = phones.size();
         for (int i = 0; i < size; i++) {
-            String name = randomStringGenerator.generateRandomString(5);
-            String param = randomStringGenerator.generateRandomString(10);
-            createCustomerModel.setName(name);
-            createCustomerModel.setPhone(listPhone.get(i));
-            AdditionalParameters additionalParameters = new AdditionalParameters();
-            additionalParameters.setString(param);
-            createCustomerModel.setAdditionalParameters(additionalParameters);
+            AdditionalParameters additionalParameters = new AdditionalParameters(randomStringGenerator.generateRandomString(10));
+            CreateCustomerModel createCustomerModel = new CreateCustomerModel(listPhone.get(i), randomStringGenerator.generateRandomString(5), additionalParameters);
             response = apiSteps.postCustomer(token, createCustomerModel);
             if (response.getStatusCode() == 200) {
                 Assertions.assertThat(response.getBody().jsonPath().getString("id").isEmpty()).as("Новый кастомер не создан").isFalse();
