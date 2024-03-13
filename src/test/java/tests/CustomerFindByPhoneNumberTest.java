@@ -31,13 +31,8 @@ public class CustomerFindByPhoneNumberTest extends BaseStep {
         String token = apiSteps.getToken(authorizationModel).jsonPath().getString("token");
         List<Long> num = getEmptyPhoneWhile(token);
         Long phoneNum = num.get(i);
-        AdditionalParameters additionalParameters = new AdditionalParameters(randomStringGenerator.generateRandomString(10));
-        CreateCustomerModel createCustomerModel = new CreateCustomerModel(phoneNum, randomStringGenerator.generateRandomString(7), additionalParameters);
-        do {
-            response = apiSteps.postCustomer(token, createCustomerModel);
-            ++i;
-        } while (response.getStatusCode() != 200 && i < num.size());
-        String idCustomerRest = response.jsonPath().getString("id");
+        String idCustomerRest = createNewCustomer(num, token, randomStringGenerator.generateRandomString(7), randomStringGenerator.generateRandomString(10))
+                .jsonPath().getString("id");
         HeaderXml headerXml = new HeaderXml(token);
         BodyXml bodyXml = new BodyXml(phoneNum);
         EnvelopeXml envelopeXml = new EnvelopeXml(headerXml, bodyXml);

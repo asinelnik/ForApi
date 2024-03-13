@@ -6,13 +6,11 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-import static io.restassured.RestAssured.given;
-
 public class ApiSteps {
 
     @Step("Получение токена")
     public Response getToken(Object body) {
-        Response response = given()
+        return RestAssured.given()
                 .filter(new AllureRestAssured())
                 .when()
                 .contentType(ContentType.JSON)
@@ -21,24 +19,22 @@ public class ApiSteps {
                 .then()
                 .log().all()
                 .extract().response();
-        return response;
     }
 
     @Step("Получение списка свободных номеров")
     public Response getEmptyPhone(String token) {
-        Response response = given()
+        return RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)
                 .header("authToken", token)
                 .get("/simcards/getEmptyPhone")
                 .then()
                 .extract().response();
-        return response;
     }
 
     @Step("Регистрация владельца номера телефона")
     public Response postCustomer(String token, Object body) {
-        Response response = given()
+        return RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)
                 .header("authToken", token)
@@ -46,12 +42,11 @@ public class ApiSteps {
                 .post("/customer/postCustomer")
                 .then().log().all()
                 .extract().response();
-        return response;
     }
 
     @Step("Получение владельца по id")
     public Response getCustomerById(String id, String token) {
-        Response response = RestAssured.given()
+        return RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)
                 .header("authToken", token)
@@ -59,12 +54,11 @@ public class ApiSteps {
                 .get("/customer/getCustomerById")
                 .then().log().all()
                 .extract().response();
-        return response;
     }
 
     @Step("Изменение статуса владельца телефона")
     public Response postChangeCustomerStatus(String token, String customerId, Object body) {
-        Response response = given()
+        return RestAssured.given()
                 .when()
                 .contentType(ContentType.JSON)
                 .header("authToken", token)
@@ -73,12 +67,11 @@ public class ApiSteps {
                 .then()
                 .log().all()
                 .extract().response();
-        return response;
     }
 
     @Step("Получение id владельца в сервисе SOAP")
     public Response soapFindByPhone(String body) {
-        Response response = given()
+        return RestAssured.given()
                 .when()
                 .contentType("application/xml")
                 .body(body)
@@ -86,6 +79,5 @@ public class ApiSteps {
                 .then()
                 .log().all()
                 .extract().response();
-        return response;
     }
 }

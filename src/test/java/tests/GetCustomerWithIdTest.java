@@ -1,22 +1,37 @@
 package tests;
 
+import io.restassured.response.Response;
+import models.rest.AuthorizationModel;
+import org.json.JSONObject;
 import org.testng.annotations.Test;
 import services.BaseStep;
-import steps.GetCustomerStep;
-import steps.PostCustomerStep;
+import services.RandomStringGenerator;
+import steps.ApiSteps;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.awaitility.Awaitility.await;
 
 public class GetCustomerWithIdTest extends BaseStep {
-    PostCustomerStep postCustomerStep = new PostCustomerStep();
-    GetCustomerStep getCustomerStep = new GetCustomerStep();
+    ApiSteps apiSteps = new ApiSteps();
+    RandomStringGenerator randomStringGenerator = new RandomStringGenerator();
 
-    @Test(description = "Получение информации о владельце")
-    public void getCustomerInfo() {
-        String token = getTokenAdmin();
-        Object passport = getCustomerStep.getIdCustomer(postCustomerStep.createNewCustomer(getEmptyPhoneWhile(token), token), token);
-        System.out.println(passport);
-        //assertThat(passport.getString("passportNumber").length()).as("Длина номера паспорта не соответствыет ожидаемому").isEqualTo(6);
-        //assertThat(passport.getString("passportSeries").length()).as("Длина серии паспорта не соответствыет ожидаемому").isEqualTo(4);
+    @Test(description = "Получение информации о владельце", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
+    public void getCustomerInfo(String login, String pass) {
+        AuthorizationModel authorizationModel = new AuthorizationModel(login, pass);
+        String token = apiSteps.getToken(authorizationModel).jsonPath().getString("token");
+        String id = createNewCustomer(getEmptyPhoneWhile(token), token, randomStringGenerator.generateRandomString(5),
+                randomStringGenerator.generateRandomString(10)).getBody().jsonPath().getString("id");
+        await().atMost(3, TimeUnit.MINUTES).with().pollInterval(20, TimeUnit.SECONDS).until(() -> {
+            Response res = apiSteps.getCustomerById(id, token);
+            if (res.jsonPath().getString("return.status").equals("ACTIVE")) {
+                return true;
+            }
+            return false;
+        });
+        JSONObject jsonObject = new JSONObject(apiSteps.getCustomerById(id, token).jsonPath().getString("return.pd"));
+        assertThat(jsonObject.getString("passportNumber").length()).as("Длина номера паспорта не соответствыет ожидаемому").isEqualTo(6);
+        assertThat(jsonObject.getString("passportSeries").length()).as("Длина серии паспорта не соответствыет ожидаемому").isEqualTo(4);
     }
 }
