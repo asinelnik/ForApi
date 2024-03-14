@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 public class BaseStep {
     ApiSteps apiSteps = new ApiSteps();
-    private final String URL = ConfigProvider.URL;
     static String USER_LOGIN = ConfigProvider.USER_LOGIN;
     static String USER_PASSWORD = ConfigProvider.USER_PASSWORD;
     static String ADMIN_LOGIN = ConfigProvider.ADMIN_LOGIN;
