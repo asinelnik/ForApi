@@ -1,6 +1,5 @@
 package tests;
 
-import io.restassured.response.Response;
 import models.rest.AuthorizationModel;
 import models.soap.BodyXml;
 import models.soap.EnvelopeXml;
@@ -23,7 +22,6 @@ public class CustomerFindByPhoneNumberTest extends BaseStep {
 
     @Test(testName = "Проверка регистрации владельца в SOAP", description = "Проверка регистрации владельца в SOAP", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
     public void customerFindByPhoneNumber(String login, String pass) throws JAXBException {
-        Response response;
         int i = 0;
         AuthorizationModel authorizationModel = new AuthorizationModel(login, pass);
         String token = apiSteps.getToken(authorizationModel).jsonPath().getString("token");
