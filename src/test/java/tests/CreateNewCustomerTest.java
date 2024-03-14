@@ -15,7 +15,7 @@ public class CreateNewCustomerTest extends BaseStep {
     ApiSteps apiSteps = new ApiSteps();
     RandomStringGenerator randomStringGenerator = new RandomStringGenerator();
 
-    @Test(testName = "Создание нового владельца номера", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
+    @Test(testName = "Создание нового владельца номера", description = "Создание нового владельца номера", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
     public void createCustomer(String login, String pass) {
         AuthorizationModel authorizationModel = new AuthorizationModel(login, pass);
         String token = apiSteps.getToken(authorizationModel).jsonPath().getString("token");

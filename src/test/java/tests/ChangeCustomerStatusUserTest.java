@@ -13,7 +13,7 @@ public class ChangeCustomerStatusUserTest extends BaseStep {
     ApiSteps apiSteps = new ApiSteps();
     RandomStringGenerator randomStringGenerator = new RandomStringGenerator();
 
-    @Test(testName = "Смена статуса владельца телефона администратором")
+    @Test(testName = "Смена статуса владельца телефона администратором", description = "Смена статуса владельца телефона администратором")
     public void changeCustomerStatus() {
         String newStatus = "DISABLE";
         ChangeStatusModel changeStatusModel = new ChangeStatusModel(newStatus);

@@ -21,7 +21,7 @@ public class CustomerFindByPhoneNumberTest extends BaseStep {
     JaxbWorker jaxbWorker = new JaxbWorker();
     ApiSteps apiSteps = new ApiSteps();
 
-    @Test(testName = "Проверка регистрации владельца в SOAP", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
+    @Test(testName = "Проверка регистрации владельца в SOAP", description = "Проверка регистрации владельца в SOAP", dataProvider = "authParamForGetToken", dataProviderClass = BaseStep.class)
     public void customerFindByPhoneNumber(String login, String pass) throws JAXBException {
         Response response;
         int i = 0;
